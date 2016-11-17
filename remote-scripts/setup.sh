@@ -13,6 +13,3 @@ sudo apt-get -y install docker-engine
 sudo service docker start
 sudo docker run hello-world
 sudo usermod -aG docker $USER
-curl -O https://raw.githubusercontent.com/cyber-dojo/commander/master/cyber-dojo
-chmod +x cyber-dojo
-sudo ./cyber-dojo up

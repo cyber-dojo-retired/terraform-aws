@@ -52,8 +52,8 @@ resource "aws_instance" "cyberdojo" {
           timeout = "1m"
           agent = false
     }
-    source = "setup.sh"
-    destination = "/home/ubuntu/setup.sh"
+    source = "remote-scripts/"
+    destination = "/home/ubuntu/"
   }
 
   provisioner "local-exec" {
@@ -71,7 +71,8 @@ resource "aws_instance" "cyberdojo" {
         }
         inline = [
           "echo hello, ",
-          "hostname"
+          "hostname" ,
+          "ls -al"
         ]
     }
   provisioner "remote-exec" {
@@ -82,6 +83,16 @@ resource "aws_instance" "cyberdojo" {
           timeout = "1m"
           agent = false
         }
-        script = "setup.sh"
+        script = "remote-scripts/setup.sh"
+    }
+    provisioner "remote-exec" {
+          connection {
+            private_key = "${file(var.aws_key_path)}"
+            user = "ubuntu"
+            host = "${aws_instance.cyberdojo.public_ip}"
+            timeout = "1m"
+            agent = false
+          }
+          script = "remote-scripts/install-cyberdojo.sh"
     }
 }

@@ -1,0 +1,37 @@
+{
+  "variables": {
+    "aws_region": "eu-central-1"
+  },
+  "builders": [{
+    "ami_name": "cyber-dojo-{{uuid | clean_ami_name}}",
+    "ami_description": "Cyberdojo application AMI based on Ubuntu",
+    "instance_type": "t2.micro",
+    "region": "{{user `aws_region`}}",
+    "type": "amazon-ebs",
+    "ssh_username": "ubuntu",
+    "source_ami_filter": {
+      "filters": {
+        "virtualization-type": "hvm",
+        "name": "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*",
+        "root-device-type": "ebs"
+      },
+      "owners": ["099720109477"],
+      "most_recent": true
+    }
+  }],
+  "provisioners": [
+  {
+    "type": "file",
+    "source": "remote-scripts",
+    "destination": "/tmp/remote-scripts"
+  },
+  {
+    "type": "shell",
+    "expect_disconnect": "true",
+    "inline": [
+      "bash /tmp/remote-scripts/setup.sh",
+      "bash /tmp/remote-scripts/install-cyberdojo.sh"
+    ]
+  }
+]
+}

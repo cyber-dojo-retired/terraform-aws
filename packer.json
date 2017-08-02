@@ -5,7 +5,7 @@
   "builders": [{
     "ami_name": "cyber-dojo-{{uuid | clean_ami_name}}",
     "ami_description": "Cyberdojo application AMI based on Ubuntu",
-    "instance_type": "t2.micro",
+    "instance_type": "t2.xlarge",
     "region": "{{user `aws_region`}}",
     "type": "amazon-ebs",
     "ssh_username": "ubuntu",

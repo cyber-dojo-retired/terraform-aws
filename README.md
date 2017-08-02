@@ -1,5 +1,10 @@
 # Terraform your own cyber-dojo on AWS
 
+## Step 0 - Create the packer image
+
+    export AWS_ACCESS_KEY=<your_key>
+    export AWS_SECRET_KEY=<your_key>
+    packer build -machine-readable packer.json
 
 ## Step 1 - Get your aws keys
 

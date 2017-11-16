@@ -62,8 +62,16 @@ resource "aws_instance" "cyberdojo" {
   key_name                    = "${var.aws_key_name}"
   vpc_security_group_ids      = ["${aws_security_group.cyberdojo_security_group.id}"]
   associate_public_ip_address = true
-
+  tags {
+    Name = "Cyberdojo Server"
+    Status = "keep"
+    Maintainer = "mike@praqma.com"
+  }
   user_data = "${file("user_data.sh")}"
+}
+resource "aws_eip" "lb" {
+  instance = "${aws_instance.cyberdojo.id}"
+  vpc      = true
 }
 
 output "cyberdojo_public_ip" {

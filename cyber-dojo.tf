@@ -68,6 +68,10 @@ resource "aws_instance" "cyberdojo" {
     Maintainer = "mike@praqma.com"
   }
   user_data = "${file("user_data.sh")}"
+
+  root_block_device {
+        volume_size = 200
+  }
 }
 resource "aws_eip" "lb" {
   instance = "${aws_instance.cyberdojo.id}"
